@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Cinzel', serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-body);
+  }
+
+  body {
+    background-color: #080c14;
+    color: #e2e8f0;
+    overflow-x: hidden;
+  }
+}
+
+.font-serif-luxury {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', Georgia, serif;
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080c14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d97706;
+}
+
+/* Subtle glow effects */
+.gold-glow {
+  box-shadow: 0 0 25px -5px rgba(217, 119, 6, 0.25);
+}
+
+.gold-glow-lg {
+  box-shadow: 0 0 45px -8px rgba(217, 119, 6, 0.35);
+}
+
+.card-luxury {
+  background: linear-gradient(145deg, rgba(22, 29, 44, 0.7) 0%, rgba(13, 17, 26, 0.85) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.card-luxury:hover {
+  border-color: rgba(217, 119, 6, 0.35);
+}
