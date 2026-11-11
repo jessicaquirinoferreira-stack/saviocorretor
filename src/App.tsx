@@ -76,7 +76,7 @@ function MainRouter() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#080c14] text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="flex flex-col min-h-screen bg-[#F8F9FA] text-[#1A2621] font-sans selection:bg-[#C8A251]/20 selection:text-[#0B2B20]">
       {/* Hide default Navbar and Footer on dedicated marketing landing pages for maximum conversion */}
       {!isLandingPage && !isAdminPage && <Navbar currentRoute={currentPath} navigate={navigate} />}
 

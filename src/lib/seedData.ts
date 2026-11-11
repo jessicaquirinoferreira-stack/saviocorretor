@@ -19,8 +19,8 @@ export const initialSiteSettings: SiteSettings = {
   heroSubtitle: 'Seleção criteriosa de casas contemporâneas, coberturas e lançamentos nobres com a assessoria especializada de @imoveiscomsavio.',
   heroBadge: 'Exclusividade & Alto Padrão',
   primaryColor: '#d97706',
-  avatarUrl: 'https://i.postimg.cc/7ZfPHyFy/Whats-App-Image-2026-11-10-at-09-09-47.jpg',
-  logoUrl: 'https://i.postimg.cc/3xMpQdvV/Logo-imobiliario-dourado-com-skyline-e-casas.png',
+  avatarUrl: 'https://i.postimg.cc/V6v7JDFN/Selfie-no-escritorio-da-Imoveis-com-Savio.png',
+  logoUrl: 'https://i.postimg.cc/RhPjD53T/Logo-Imobiliario-Dourado-Luxuoso.png',
   confirmationNotice: 'Dados em fase de homologação cadastral. O corretor pode editar telefones, CRECI e imagens a qualquer momento no Painel Admin.',
   updatedAt: new Date().toISOString(),
 };

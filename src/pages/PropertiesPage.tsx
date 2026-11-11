@@ -96,32 +96,36 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
   }, [properties, purpose, propertyType, searchTerm, minBedrooms, minSuites, minParking, maxPrice, sortBy]);
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 pt-28 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-amber-400 text-xs uppercase tracking-widest font-semibold mb-2">
+    <div className="min-h-screen bg-[#F8F9FA] text-[#1A2621]">
+      {/* Editorial Header Banner in Deep Forest Green #0B2B20 */}
+      <section className="bg-[#0B2B20] text-white pt-32 pb-16 px-4 sm:px-6 lg:px-8 border-b border-[#153D2F] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#C8A251_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex items-center gap-2 text-[#C8A251] text-xs uppercase tracking-widest font-semibold mb-3">
             <Home className="w-4 h-4" />
-            <span>Portfólio Imobiliário</span>
+            <span>Portfólio de Imóveis Selecionados</span>
           </div>
-          <h1 className="font-cinzel text-3xl sm:text-5xl font-bold text-slate-100 mb-3">
-            Catálogo de Imóveis Exclusivos
+          <h1 className="font-editorial text-3xl sm:text-5xl font-bold text-white mb-3 tracking-tight">
+            Catálogo de Imóveis
           </h1>
-          <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
-            Navegue por mansões, coberturas e residências de alto padrão disponíveis para aquisição e locação.
+          <p className="text-sm sm:text-base text-gray-300 max-w-2xl leading-relaxed">
+            Mansões, coberturas, casas em condomínios fechados e apartamentos de alto padrão com assessoria imobiliária completa.
           </p>
         </div>
+      </section>
 
-        {/* Filters Card */}
-        <div className="bg-[#0d121f] rounded-2xl border border-slate-800 p-5 sm:p-6 mb-10 shadow-xl space-y-5">
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {/* Filters Card in Clean White */}
+        <div className="bg-white rounded-2xl border border-gray-200/90 p-5 sm:p-7 mb-10 shadow-sm space-y-5">
           {/* Top Bar: Purpose Tabs + Search Input */}
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-            {/* Purpose */}
+            {/* Purpose Tabs */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
               {[
-                { id: 'todos', label: 'Todos' },
-                { id: 'venda', label: 'Venda' },
-                { id: 'aluguel', label: 'Locação' },
+                { id: 'todos', label: 'Todos os Imóveis' },
+                { id: 'venda', label: 'Comprar' },
+                { id: 'aluguel', label: 'Alugar' },
                 { id: 'lancamento', label: 'Lançamentos' },
               ].map((item) => (
                 <button
@@ -129,8 +133,8 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
                   onClick={() => setPurpose(item.id)}
                   className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all ${
                     purpose === item.id
-                      ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
-                      : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                      ? 'bg-[#0B2B20] text-[#C8A251] shadow-sm'
+                      : 'bg-[#F1F4F2] text-gray-700 hover:text-[#0B2B20] hover:bg-gray-200'
                   }`}
                 >
                   {item.label}
@@ -140,36 +144,36 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
 
             {/* Keyword Search */}
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Buscar por bairro, condomínio, código..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-sm text-slate-100 placeholder:text-slate-500 outline-none focus:border-amber-500 transition-colors"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-sm text-[#1A2621] placeholder:text-gray-400 outline-none focus:border-[#0B2B20] focus:ring-1 focus:ring-[#0B2B20] transition-colors"
               />
             </div>
 
             {/* Toggle Advanced */}
             <button
               onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700/80 transition-colors shrink-0"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#F1F4F2] hover:bg-gray-200 text-[#0B2B20] text-xs font-semibold border border-gray-300 transition-colors shrink-0"
             >
-              <SlidersHorizontal className="w-4 h-4 text-amber-400" />
+              <SlidersHorizontal className="w-4 h-4 text-[#C8A251]" />
               <span>{showAdvancedFilters ? 'Menos Filtros' : 'Filtros Avançados'}</span>
             </button>
           </div>
 
-          {/* Secondary Row: Type + Sort */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 border-t border-slate-800/80">
+          {/* Secondary Row: Type + Sort + Max Price */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-gray-100">
             <div>
-              <label className="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+              <label className="block text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">
                 Tipo de Imóvel
               </label>
               <select
                 value={propertyType}
                 onChange={(e) => setPropertyType(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-xs sm:text-sm text-slate-200 outline-none focus:border-amber-500"
+                className="w-full px-3 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-xs sm:text-sm text-[#1A2621] outline-none focus:border-[#0B2B20]"
               >
                 <option value="todos">Todos os Tipos</option>
                 <option value="casa">Casas & Mansões</option>
@@ -181,13 +185,13 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
             </div>
 
             <div>
-              <label className="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+              <label className="block text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">
                 Ordenar Por
               </label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-xs sm:text-sm text-slate-200 outline-none focus:border-amber-500"
+                className="w-full px-3 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-xs sm:text-sm text-[#1A2621] outline-none focus:border-[#0B2B20]"
               >
                 <option value="destaque">Destaques Primeiro</option>
                 <option value="preco_desc">Maior Preço</option>
@@ -197,9 +201,9 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
             </div>
 
             <div>
-              <div className="flex justify-between text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+              <div className="flex justify-between text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">
                 <span>Preço Máx.</span>
-                <span className="text-amber-400 font-bold">
+                <span className="text-[#0B2B20] font-bold">
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(maxPrice)}
                 </span>
               </div>
@@ -210,14 +214,14 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
                 step={250000}
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full accent-amber-500 cursor-pointer mt-1"
+                className="w-full accent-[#0B2B20] cursor-pointer mt-2"
               />
             </div>
 
             <div className="flex items-end">
               <button
                 onClick={resetFilters}
-                className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs text-slate-400 hover:text-slate-200 border border-slate-800 transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#F1F4F2] hover:bg-gray-200 text-xs text-gray-700 border border-gray-300 transition-colors font-medium"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Limpar Filtros</span>
@@ -227,9 +231,9 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
 
           {/* Advanced Row (Bedrooms, Suites, Parking) */}
           {showAdvancedFilters && (
-            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-800/80">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-100">
               <div>
-                <label className="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                <label className="block text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">
                   Mínimo Quartos
                 </label>
                 <div className="flex items-center gap-1.5">
@@ -239,8 +243,8 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
                       onClick={() => setMinBedrooms(n)}
                       className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                         minBedrooms === n
-                          ? 'bg-amber-500 text-slate-950'
-                          : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#0B2B20] text-[#C8A251]'
+                          : 'bg-[#F1F4F2] text-gray-600 hover:text-[#0B2B20] hover:bg-gray-200'
                       }`}
                     >
                       {n === 0 ? 'Todos' : `${n}+`}
@@ -250,7 +254,7 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
               </div>
 
               <div>
-                <label className="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                <label className="block text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">
                   Mínimo Suítes
                 </label>
                 <div className="flex items-center gap-1.5">
@@ -260,8 +264,8 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
                       onClick={() => setMinSuites(n)}
                       className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                         minSuites === n
-                          ? 'bg-amber-500 text-slate-950'
-                          : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#0B2B20] text-[#C8A251]'
+                          : 'bg-[#F1F4F2] text-gray-600 hover:text-[#0B2B20] hover:bg-gray-200'
                       }`}
                     >
                       {n === 0 ? 'Todas' : `${n}+`}
@@ -271,7 +275,7 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
               </div>
 
               <div>
-                <label className="block text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+                <label className="block text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-1">
                   Mínimo Vagas
                 </label>
                 <div className="flex items-center gap-1.5">
@@ -281,8 +285,8 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
                       onClick={() => setMinParking(n)}
                       className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                         minParking === n
-                          ? 'bg-amber-500 text-slate-950'
-                          : 'bg-slate-900 text-slate-400 hover:text-slate-200'
+                          ? 'bg-[#0B2B20] text-[#C8A251]'
+                          : 'bg-[#F1F4F2] text-gray-600 hover:text-[#0B2B20] hover:bg-gray-200'
                       }`}
                     >
                       {n === 0 ? 'Todas' : `${n}+`}
@@ -295,13 +299,13 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
         </div>
 
         {/* Results Counter */}
-        <div className="flex items-center justify-between mb-6 text-xs text-slate-400">
+        <div className="flex items-center justify-between mb-6 text-xs text-gray-500">
           <span>
-            Exibindo <strong className="text-amber-400 font-bold">{filteredProperties.length}</strong> {filteredProperties.length === 1 ? 'imóvel encontrado' : 'imóveis encontrados'}
+            Exibindo <strong className="text-[#0B2B20] font-bold">{filteredProperties.length}</strong> {filteredProperties.length === 1 ? 'imóvel disponível' : 'imóveis disponíveis'}
           </span>
           {filteredProperties.length > 0 && (
-            <span className="flex items-center gap-1 text-emerald-400">
-              <Sparkles className="w-3.5 h-3.5" />
+            <span className="flex items-center gap-1 text-[#0B2B20] font-medium">
+              <Sparkles className="w-3.5 h-3.5 text-[#C8A251]" />
               <span>Prontos para visita</span>
             </span>
           )}
@@ -320,17 +324,17 @@ export const PropertiesPage: React.FC<PropertiesPageProps> = ({ navigate, onOpen
             ))}
           </div>
         ) : (
-          <div className="bg-[#0d121f] rounded-2xl border border-slate-800 p-12 text-center max-w-xl mx-auto space-y-4">
-            <Home className="w-12 h-12 text-slate-600 mx-auto" />
-            <h3 className="font-cinzel text-xl font-bold text-slate-200">
+          <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center max-w-xl mx-auto space-y-4 shadow-sm">
+            <Home className="w-12 h-12 text-gray-400 mx-auto" />
+            <h3 className="font-editorial text-xl font-bold text-[#0B2B20]">
               Nenhum imóvel encontrado para os filtros selecionados
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-gray-600 leading-relaxed">
               Tente ampliar a faixa de preço ou limpar os filtros de busca. O corretor Sávio também trabalha com captação ativa sob demanda.
             </p>
             <button
               onClick={resetFilters}
-              className="px-6 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-amber-400 transition-colors"
+              className="px-6 py-2.5 rounded-xl bg-[#0B2B20] text-[#C8A251] font-bold text-xs uppercase tracking-wider hover:bg-[#133F30] transition-colors"
             >
               Restaurar Todos os Imóveis
             </button>

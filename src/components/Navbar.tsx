@@ -3,6 +3,8 @@ import { useSettings } from '../contexts/SettingsContext';
 import { MessageCircle, Menu, X, Building2, PhoneCall, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
+import { ShimmerButton } from './ui/ShimmerButton';
+
 interface NavbarProps {
   currentRoute: string;
   navigate: (route: string) => void;
@@ -36,68 +38,71 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, navigate }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
         scrolled
-          ? 'bg-[#080c14]/90 backdrop-blur-md border-b border-amber-500/15 py-3 shadow-2xl'
-          : 'bg-gradient-to-b from-[#080c14]/80 to-transparent py-5'
+          ? 'bg-[#0B2B20]/95 backdrop-blur-md shadow-md py-2 sm:py-2.5 text-white border-b border-[#1A4535]'
+          : 'bg-[#0B2B20] text-white py-2.5 sm:py-3 border-b border-[#153D2F]'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand / Logo */}
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-3 text-left group transition-transform focus:outline-none"
+          className="flex items-center gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C8A251] rounded-xl group shrink-0 py-0.5"
         >
           {settings.logoUrl ? (
             <img
               src={settings.logoUrl}
               alt={settings.commercialName || 'Sávio Imóveis'}
-              className="h-11 sm:h-12 w-auto object-contain bg-transparent group-hover:scale-105 transition-transform drop-shadow-[0_2px_12px_rgba(217,119,6,0.25)]"
+              className="h-10 sm:h-11 w-auto object-contain bg-transparent group-hover:scale-105 transition-transform drop-shadow-[0_2px_10px_rgba(200,162,81,0.25)]"
             />
           ) : (
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold font-cinzel text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#C8A251] to-[#E2C481] flex items-center justify-center text-[#0B2B20] font-bold font-editorial text-xl shadow-md group-hover:scale-105 transition-transform">
               S
             </div>
           )}
           <div>
-            <span className="font-cinzel text-lg sm:text-xl font-bold tracking-wider text-slate-100 block">
+            <span className="font-editorial text-lg sm:text-xl font-bold tracking-wider text-white block">
               {settings.commercialName || 'SÁVIO IMÓVEIS'}
             </span>
-            <span className="text-[10px] tracking-widest uppercase text-amber-400/90 font-medium block">
-              Alto Padrão & Investimentos
+            <span className="text-[#C8A251] font-normal text-[10px] sm:text-xs tracking-widest uppercase block">
+              Assessoria & Alto Padrão
             </span>
           </div>
         </button>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+        <nav className="hidden md:flex items-center gap-1 lg:gap-3">
           {navLinks.map((link) => {
             const isActive = currentRoute === link.route;
             return (
               <button
                 key={link.route}
                 onClick={() => navigate(link.route)}
-                className={`px-3 lg:px-4 py-2 rounded-full text-xs lg:text-sm font-medium tracking-wide transition-all ${
+                className={`relative px-3.5 py-2 text-xs lg:text-sm font-medium tracking-wide transition-all ${
                   isActive
-                    ? 'text-amber-400 bg-amber-500/10 border border-amber-500/20'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5'
+                    ? 'text-[#C8A251] font-semibold'
+                    : 'text-gray-300 hover:text-[#C8A251]'
                 }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {isActive && (
+                  <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#C8A251] rounded-full" />
+                )}
               </button>
             );
           })}
         </nav>
 
-        {/* Direct Action */}
+        {/* Direct Action Buttons */}
         <div className="hidden sm:flex items-center gap-3">
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-semibold px-4 py-2 rounded-full text-xs lg:text-sm shadow-md shadow-amber-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="inline-flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-wider font-semibold text-[#0B2B20] bg-[#C8A251] hover:bg-[#D4AF37] rounded-md transition-all shadow-md active:scale-95"
           >
-            <MessageCircle className="w-4 h-4 fill-slate-950 text-slate-950" />
+            <MessageCircle className="w-4 h-4 fill-current" />
             <span>Falar com Sávio</span>
           </a>
         </div>
@@ -105,10 +110,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, navigate }) => {
         {/* Mobile Hamburger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden text-slate-300 hover:text-white p-2 rounded-lg bg-white/5 border border-white/10 focus:outline-none"
+          className="md:hidden text-gray-200 hover:text-white p-2 rounded-lg bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-[#C8A251]"
           aria-label="Menu"
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileMenuOpen ? <X className="w-6 h-6 text-[#C8A251]" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
@@ -119,9 +124,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, navigate }) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0d121f] border-b border-amber-500/20 overflow-hidden px-4 py-4"
+            className="md:hidden bg-[#0A261C] border-b border-[#1A4535] px-4 pt-4 pb-6 space-y-2 shadow-2xl"
           >
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5">
               {navLinks.map((link) => (
                 <button
                   key={link.route}
@@ -131,8 +136,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, navigate }) => {
                   }}
                   className={`text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                     currentRoute === link.route
-                      ? 'bg-amber-500/15 text-amber-400 font-semibold'
-                      : 'text-slate-200 hover:bg-white/5'
+                      ? 'bg-[#153D2F] text-[#C8A251] font-semibold border border-[#C8A251]/30'
+                      : 'text-gray-200 hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   {link.label}
@@ -144,9 +149,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRoute, navigate }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="mt-2 flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold py-3 rounded-lg text-sm shadow-lg"
+                className="mt-3 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold py-3 rounded-lg text-xs uppercase tracking-wider shadow-lg transition-all"
               >
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4 fill-white" />
                 <span>Atendimento WhatsApp</span>
               </a>
             </div>

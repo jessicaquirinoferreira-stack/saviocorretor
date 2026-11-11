@@ -197,38 +197,44 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
 
   return (
     <aside aria-label="Assistente Virtual Sofia" className="fixed bottom-6 left-6 z-40">
-      {/* 1. Collapsed Trigger Avatar */}
+      {/* 1. Collapsed Trigger Avatar (TFT Corretor Style) */}
       {!isOpen && (
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsOpen(true)}
-            className="relative flex items-center justify-center w-14 h-14 rounded-full ring-2 ring-amber-500/50 hover:ring-amber-400 shadow-2xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all focus:outline-none overflow-hidden bg-slate-900 group"
+            className="group relative flex items-center gap-3 bg-[#0B2B20] text-white p-1.5 sm:pr-4 rounded-full shadow-2xl hover:bg-[#134636] border-2 border-[#C8A251] transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#C8A251]/30"
             title="Conversar com Sofia, Consultora Virtual"
           >
-            <img
-              src={assistantAvatar}
-              alt="Sofia - Consultora Virtual Sávio"
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-            />
-            {/* Online Green Pulsing Indicator */}
-            <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-emerald-400 rounded-full border-2 border-[#080c14] animate-pulse" />
-          </button>
+            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/80 shadow-md shrink-0 bg-[#071C15]">
+              <img
+                src={assistantAvatar}
+                alt="Sofia - Consultora Virtual Sávio"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 border-2 border-[#0B2B20]" />
+            </div>
 
-          {/* Floating teaser bubble */}
-          <div
-            onClick={() => setIsOpen(true)}
-            className="cursor-pointer hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-[#0d121f]/95 border border-amber-500/30 text-xs text-slate-200 shadow-xl backdrop-blur-md hover:border-amber-400 transition-all group"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span className="font-medium">
-              Olá! Posso te ajudar a encontrar seu imóvel de alto padrão?
+            <div className="hidden sm:flex flex-col text-left">
+              <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                <span>Sofia · Consultora</span>
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+              </span>
+              <span className="text-[10px] text-[#C8A251] font-medium tracking-wide">
+                Atendimento Imediato
+              </span>
+            </div>
+
+            <span className="hidden sm:inline-flex rounded-full h-4 w-4 bg-[#C8A251] text-[9px] text-[#0B2B20] font-bold items-center justify-center ml-1">
+              1
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:rotate-12 transition-transform" />
-          </div>
+          </button>
         </div>
       )}
 
-      {/* 2. Expanded Chat Window */}
+      {/* 2. Expanded Chat Window (TFT Style) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -236,27 +242,27 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.25 }}
-            className="w-[360px] sm:w-[400px] h-[520px] max-h-[85vh] bg-[#0d121f] border border-amber-500/40 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-slate-100"
+            className="w-[360px] sm:w-[400px] h-[520px] max-h-[85vh] bg-[#F8F9FA] border border-gray-200/90 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-[#1A2621]"
           >
-            {/* Header */}
-            <div className="bg-gradient-to-r from-slate-900 via-[#101726] to-slate-900 border-b border-slate-800 p-3.5 flex items-center justify-between">
+            {/* Header in #0B2B20 */}
+            <div className="bg-[#0B2B20] text-white px-5 py-4 flex items-center justify-between border-b border-[#1A4535]">
               <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-amber-500/40 shrink-0">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border border-[#C8A251] shrink-0 bg-[#071C15]">
                   <img
                     src={assistantAvatar}
                     alt="Sofia"
                     className="w-full h-full object-cover"
                   />
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-slate-950" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-[#0B2B20]" />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <span className="font-cinzel text-sm font-bold text-slate-100">Sofia</span>
-                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-semibold uppercase">
+                    <span className="font-editorial text-sm font-bold text-white">Sofia</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#C8A251] text-[#0B2B20] font-bold uppercase">
                       IA
                     </span>
                   </div>
-                  <span className="text-[11px] text-slate-400 block truncate">
+                  <span className="text-[11px] text-gray-300 block truncate">
                     Consultora Virtual • @imoveiscomsavio
                   </span>
                 </div>
@@ -265,14 +271,14 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                  className="p-1 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
                   title="Minimizar"
                 >
                   <Minimize2 className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                  className="p-1 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
                   title="Fechar"
                 >
                   <X className="w-5 h-5" />
@@ -281,23 +287,23 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
             </div>
 
             {/* Messages Body */}
-            <div className="flex-1 p-3.5 overflow-y-auto space-y-3.5 text-xs">
+            <div className="flex-1 p-4 overflow-y-auto space-y-3.5 text-xs bg-[#F8F9FA]">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
                   className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed shadow-md ${
+                    className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 leading-relaxed shadow-xs ${
                       msg.sender === 'user'
-                        ? 'bg-amber-500 text-slate-950 font-medium rounded-br-none'
-                        : 'bg-slate-900 border border-slate-800 text-slate-200 rounded-bl-none'
+                        ? 'bg-[#0B2B20] text-white font-medium rounded-br-none'
+                        : 'bg-white border border-gray-200 text-[#1A2621] rounded-bl-none'
                     }`}
                   >
                     <p className="whitespace-pre-line">{msg.text}</p>
                     <span
                       className={`text-[9px] mt-1 block text-right ${
-                        msg.sender === 'user' ? 'text-slate-900/70' : 'text-slate-500'
+                        msg.sender === 'user' ? 'text-gray-300' : 'text-gray-400'
                       }`}
                     >
                       {msg.timestamp}
@@ -315,9 +321,9 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
                               href={btn.url || whatsappUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/40 border border-emerald-500/40 text-emerald-300 text-[11px] font-semibold transition-all"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20BA5A] text-white text-[11px] font-semibold transition-all shadow-xs"
                             >
-                              <MessageCircle className="w-3.5 h-3.5 fill-emerald-300" />
+                              <MessageCircle className="w-3.5 h-3.5 fill-white" />
                               <span>{btn.label}</span>
                             </a>
                           );
@@ -329,7 +335,7 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
                               href={btn.url || instagramUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/40 text-pink-300 text-[11px] font-semibold transition-all"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#123024] hover:bg-[#C8A251] hover:text-[#0B2B20] text-[#C8A251] border border-[#C8A251]/30 text-[11px] font-semibold transition-all"
                             >
                               <Instagram className="w-3.5 h-3.5" />
                               <span>{btn.label}</span>
@@ -344,7 +350,7 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
                               if (onNavigate) onNavigate('/imoveis');
                               else window.location.href = '/imoveis';
                             }}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-slate-700 text-slate-300 text-[11px] font-semibold transition-all"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-[#0B2B20] hover:text-white border border-gray-200 text-[#0B2B20] text-[11px] font-semibold transition-all"
                           >
                             <span>{btn.label}</span>
                             <ArrowRight className="w-3 h-3" />
@@ -358,11 +364,11 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
 
               {/* Typing state */}
               {isTyping && (
-                <div className="flex items-center gap-2 text-slate-400 text-xs pl-2">
-                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" />
-                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-bounce [animation-delay:0.2s]" />
-                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-bounce [animation-delay:0.4s]" />
-                  <span className="text-[11px] text-slate-400 ml-1">Sofia está digitando...</span>
+                <div className="flex items-center gap-2 text-gray-500 text-xs pl-2">
+                  <span className="w-2 h-2 rounded-full bg-[#C8A251] animate-bounce" />
+                  <span className="w-2 h-2 rounded-full bg-[#C8A251] animate-bounce [animation-delay:0.2s]" />
+                  <span className="w-2 h-2 rounded-full bg-[#C8A251] animate-bounce [animation-delay:0.4s]" />
+                  <span className="text-[11px] text-gray-500 ml-1">Sofia está digitando...</span>
                 </div>
               )}
 
@@ -370,12 +376,12 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
             </div>
 
             {/* Quick Suggestion Pills */}
-            <div className="px-3 py-1.5 border-t border-slate-800/80 bg-slate-950/60 overflow-x-auto flex gap-1.5">
+            <div className="px-3 py-2 border-t border-gray-200 bg-white overflow-x-auto flex gap-1.5">
               {quickQuestions.map((q, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSendMessage(q)}
-                  className="px-2.5 py-1 rounded-full bg-white/5 hover:bg-amber-500/20 border border-slate-800 hover:border-amber-500/40 text-slate-300 hover:text-amber-300 text-[10px] whitespace-nowrap transition-all"
+                  className="px-2.5 py-1 rounded-full bg-[#C8A251]/10 hover:bg-[#C8A251]/20 border border-[#C8A251]/30 text-[#0B2B20] text-[10px] whitespace-nowrap transition-all font-medium"
                 >
                   {q}
                 </button>
@@ -388,19 +394,19 @@ export const VirtualAssistant: React.FC<{ onNavigate?: (route: string) => void }
                 e.preventDefault();
                 handleSendMessage(inputText);
               }}
-              className="p-2.5 bg-slate-900 border-t border-slate-800 flex items-center gap-2"
+              className="p-3 bg-white border-t border-gray-200 flex items-center gap-2"
             >
               <input
                 type="text"
                 placeholder="Pergunte sobre imóveis, valores ou agendamento..."
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-700/80 text-xs text-slate-100 placeholder:text-slate-500 outline-none focus:border-amber-500 transition-colors"
+                className="flex-1 px-3 py-2 text-xs rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0B2B20] focus:border-transparent text-gray-800"
               />
               <button
                 type="submit"
                 disabled={!inputText.trim()}
-                className="p-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition-all disabled:opacity-40"
+                className="p-2 bg-[#0B2B20] text-white rounded-lg hover:bg-[#134636] disabled:opacity-40 transition"
                 aria-label="Enviar mensagem"
               >
                 <Send className="w-4 h-4" />

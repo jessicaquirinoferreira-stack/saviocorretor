@@ -67,6 +67,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     const initializeData = async () => {
       try {
+        let isAlreadySeeded = false;
+
         // 1. Settings
         try {
           const settingsRef = doc(db, 'settings', 'global');
@@ -76,21 +78,23 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             await setDoc(settingsRef, initialSiteSettings);
             setSettings(initialSiteSettings);
           } else {
+            isAlreadySeeded = true;
             const raw = settingsSnap.data() as SiteSettings;
-            const officialLogo = 'https://i.postimg.cc/3xMpQdvV/Logo-imobiliario-dourado-com-skyline-e-casas.png';
-            const officialAvatar = 'https://i.postimg.cc/7ZfPHyFy/Whats-App-Image-2026-11-10-at-09-09-47.jpg';
+            const officialLogo = 'https://i.postimg.cc/RhPjD53T/Logo-Imobiliario-Dourado-Luxuoso.png';
+            const officialAvatar = 'https://i.postimg.cc/V6v7JDFN/Selfie-no-escritorio-da-Imoveis-com-Savio.png';
+            const isOldLogo = !raw.logoUrl || raw.logoUrl.includes('3xMpQdvV') || raw.logoUrl.includes('skyline');
             const cleaned: SiteSettings = {
               ...initialSiteSettings,
               ...raw,
-              logoUrl: raw.logoUrl || officialLogo,
-              avatarUrl: (!raw.avatarUrl || raw.avatarUrl.includes('unsplash')) ? officialAvatar : raw.avatarUrl,
+              logoUrl: isOldLogo ? officialLogo : raw.logoUrl,
+              avatarUrl: (!raw.avatarUrl || raw.avatarUrl.includes('unsplash') || raw.avatarUrl.includes('Whats-App-Image')) ? officialAvatar : raw.avatarUrl,
               bio: (raw.bio || initialSiteSettings.bio).replace(/curador(ia|a)/gi, 'assessoria'),
               heroSubtitle: (raw.heroSubtitle || initialSiteSettings.heroSubtitle).replace(/curador(ia|a)/gi, 'seleção'),
               heroBadge: (raw.heroBadge || initialSiteSettings.heroBadge).replace(/curador(ia|a)/gi, 'Seleção Exclusiva'),
             };
             setSettings(cleaned);
 
-            if (!raw.logoUrl || !raw.avatarUrl || raw.avatarUrl.includes('unsplash') || raw.bio?.match(/curador/i) || raw.heroSubtitle?.match(/curador/i) || raw.heroBadge?.match(/curador/i)) {
+            if (isOldLogo || !raw.avatarUrl || raw.avatarUrl.includes('unsplash') || raw.avatarUrl.includes('Whats-App-Image') || raw.bio?.match(/curador/i) || raw.heroSubtitle?.match(/curador/i) || raw.heroBadge?.match(/curador/i)) {
               setDoc(settingsRef, cleaned, { merge: true }).catch(() => {});
             }
           }
@@ -98,13 +102,14 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           unsubscribeSettings = onSnapshot(settingsRef, (docSnap) => {
             if (docSnap.exists()) {
               const raw = docSnap.data() as SiteSettings;
-              const officialLogo = 'https://i.postimg.cc/3xMpQdvV/Logo-imobiliario-dourado-com-skyline-e-casas.png';
-              const officialAvatar = 'https://i.postimg.cc/7ZfPHyFy/Whats-App-Image-2026-11-10-at-09-09-47.jpg';
+              const officialLogo = 'https://i.postimg.cc/RhPjD53T/Logo-Imobiliario-Dourado-Luxuoso.png';
+              const officialAvatar = 'https://i.postimg.cc/V6v7JDFN/Selfie-no-escritorio-da-Imoveis-com-Savio.png';
+              const isOldLogo = !raw.logoUrl || raw.logoUrl.includes('3xMpQdvV') || raw.logoUrl.includes('skyline');
               const cleaned: SiteSettings = {
                 ...initialSiteSettings,
                 ...raw,
-                logoUrl: raw.logoUrl || officialLogo,
-                avatarUrl: (!raw.avatarUrl || raw.avatarUrl.includes('unsplash')) ? officialAvatar : raw.avatarUrl,
+                logoUrl: isOldLogo ? officialLogo : raw.logoUrl,
+                avatarUrl: (!raw.avatarUrl || raw.avatarUrl.includes('unsplash') || raw.avatarUrl.includes('Whats-App-Image')) ? officialAvatar : raw.avatarUrl,
                 bio: (raw.bio || initialSiteSettings.bio).replace(/curador(ia|a)/gi, 'assessoria'),
                 heroSubtitle: (raw.heroSubtitle || initialSiteSettings.heroSubtitle).replace(/curador(ia|a)/gi, 'seleção'),
                 heroBadge: (raw.heroBadge || initialSiteSettings.heroBadge).replace(/curador(ia|a)/gi, 'Seleção Exclusiva'),
@@ -124,22 +129,21 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           const propCol = collection(db, 'properties');
           const propSnap = await getDocs(propCol);
 
-          if (propSnap.empty) {
+          if (propSnap.empty && !isAlreadySeeded) {
             for (const p of initialProperties) {
               await setDoc(doc(db, 'properties', p.id), p);
             }
+            setProperties(initialProperties);
           } else {
             const list: Property[] = [];
             propSnap.forEach(d => list.push({ id: d.id, ...d.data() } as Property));
-            if (list.length > 0) setProperties(list);
+            setProperties(list);
           }
 
           unsubscribeProperties = onSnapshot(propCol, (snap) => {
-            if (!snap.empty) {
-              const list: Property[] = [];
-              snap.forEach(d => list.push({ id: d.id, ...d.data() } as Property));
-              setProperties(list);
-            }
+            const list: Property[] = [];
+            snap.forEach(d => list.push({ id: d.id, ...d.data() } as Property));
+            setProperties(list);
           }, (err) => {
             console.warn('Properties listener fallback:', err?.message || err);
           });
@@ -152,21 +156,22 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         try {
           const devCol = collection(db, 'developments');
           const devSnap = await getDocs(devCol);
-          if (devSnap.empty) {
+
+          if (devSnap.empty && !isAlreadySeeded) {
             for (const d of initialDevelopments) {
               await setDoc(doc(db, 'developments', d.id), d);
             }
+            setDevelopments(initialDevelopments);
           } else {
             const list: Development[] = [];
             devSnap.forEach(d => list.push({ id: d.id, ...d.data() } as Development));
-            if (list.length > 0) setDevelopments(list);
+            setDevelopments(list);
           }
+
           unsubscribeDevelopments = onSnapshot(devCol, (snap) => {
-            if (!snap.empty) {
-              const list: Development[] = [];
-              snap.forEach(d => list.push({ id: d.id, ...d.data() } as Development));
-              setDevelopments(list);
-            }
+            const list: Development[] = [];
+            snap.forEach(d => list.push({ id: d.id, ...d.data() } as Development));
+            setDevelopments(list);
           }, (err) => {
             console.warn('Developments listener fallback:', err?.message || err);
           });
@@ -312,20 +317,32 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       createdAt: now,
       updatedAt: now,
     };
-    await setDoc(doc(db, 'developments', id), newDev);
     setDevelopments(prev => [newDev, ...prev]);
+    try {
+      await setDoc(doc(db, 'developments', id), newDev);
+    } catch (error) {
+      handleFirestoreError(error, OperationType.CREATE, `developments/${id}`);
+    }
     return id;
   };
 
   const updateDevelopment = async (id: string, updates: Partial<Development>) => {
     const updated = { ...updates, updatedAt: new Date().toISOString() };
     setDevelopments(prev => prev.map(d => d.id === id ? { ...d, ...updated } : d));
-    await updateDoc(doc(db, 'developments', id), updated);
+    try {
+      await setDoc(doc(db, 'developments', id), updated, { merge: true });
+    } catch (error) {
+      handleFirestoreError(error, OperationType.UPDATE, `developments/${id}`);
+    }
   };
 
   const deleteDevelopment = async (id: string) => {
     setDevelopments(prev => prev.filter(d => d.id !== id));
-    await deleteDoc(doc(db, 'developments', id));
+    try {
+      await deleteDoc(doc(db, 'developments', id));
+    } catch (error) {
+      handleFirestoreError(error, OperationType.DELETE, `developments/${id}`);
+    }
   };
 
   const addLandingPage = async (lpData: Omit<LandingPage, 'id' | 'createdAt' | 'updatedAt' | 'viewsCount' | 'leadsCount'>) => {

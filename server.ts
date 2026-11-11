@@ -1,6 +1,8 @@
 import express from 'express';
 import 'dotenv/config';
 import { GoogleGenAI } from '@google/genai';
+import { put } from '@vercel/blob';
+import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -10,7 +12,16 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// Setup multer in-memory storage for handling file uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 30 * 1024 * 1024, // 30MB limit
+  },
+});
 
 // Initialize Gemini client with aistudio-build header
 const ai = new GoogleGenAI({
@@ -22,7 +33,115 @@ const ai = new GoogleGenAI({
   },
 });
 
-// Endpoint for Sofia - Virtual Assistant
+// 1. Vercel Blob Upload Endpoint (Single File)
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'Nenhum arquivo enviado' });
+    }
+
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    const cleanOriginalName = (req.file.originalname || 'upload.jpg').replace(/[^a-zA-Z0-9._-]/g, '_');
+    const filename = `imoveis-savio/${Date.now()}-${cleanOriginalName}`;
+
+    if (token) {
+      const blob = await put(filename, req.file.buffer, {
+        access: 'public',
+        contentType: req.file.mimetype || 'image/jpeg',
+        token,
+      });
+
+      return res.json({
+        success: true,
+        url: blob.url,
+        pathname: blob.pathname,
+        provider: 'vercel-blob',
+      });
+    }
+
+    // In local dev without BLOB_READ_WRITE_TOKEN, return data URL so upload never fails
+    const base64 = `data:${req.file.mimetype || 'image/jpeg'};base64,${req.file.buffer.toString('base64')}`;
+    return res.json({
+      success: true,
+      url: base64,
+      provider: 'local-fallback',
+      message: 'Arquivo processado localmente. Configure BLOB_READ_WRITE_TOKEN para CDN em nuvem.',
+    });
+  } catch (error: any) {
+    console.error('Vercel Blob upload failure:', error);
+    return res.status(500).json({
+      error: error?.message || 'Falha no upload do arquivo para o Vercel Blob',
+    });
+  }
+});
+
+// 2. Vercel Blob Multiple Upload Endpoint
+app.post('/api/upload/multiple', upload.array('files', 20), async (req, res) => {
+  try {
+    const files = req.files as Express.Multer.File[];
+    if (!files || files.length === 0) {
+      return res.status(400).json({ error: 'Nenhum arquivo enviado' });
+    }
+
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    const uploadedUrls: string[] = [];
+
+    for (const f of files) {
+      const cleanOriginalName = (f.originalname || 'upload.jpg').replace(/[^a-zA-Z0-9._-]/g, '_');
+      const filename = `imoveis-savio/${Date.now()}-${cleanOriginalName}`;
+
+      if (token) {
+        const blob = await put(filename, f.buffer, {
+          access: 'public',
+          contentType: f.mimetype || 'image/jpeg',
+          token,
+        });
+        uploadedUrls.push(blob.url);
+      } else {
+        const base64 = `data:${f.mimetype || 'image/jpeg'};base64,${f.buffer.toString('base64')}`;
+        uploadedUrls.push(base64);
+      }
+    }
+
+    return res.json({
+      success: true,
+      urls: uploadedUrls,
+      count: uploadedUrls.length,
+    });
+  } catch (error: any) {
+    console.error('Multiple upload failure:', error);
+    return res.status(500).json({
+      error: error?.message || 'Falha no upload múltiplo',
+    });
+  }
+});
+
+// 3. CORS Proxy for Watermarking external assets without canvas taint
+app.get('/api/proxy-image', async (req, res) => {
+  try {
+    const imageUrl = req.query.url as string;
+    if (!imageUrl) {
+      return res.status(400).send('URL de imagem ausente');
+    }
+
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      return res.status(response.status).send('Erro ao buscar imagem externa');
+    }
+
+    const contentType = response.headers.get('content-type') || 'image/jpeg';
+    const buffer = await response.arrayBuffer();
+
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.send(Buffer.from(buffer));
+  } catch (error: any) {
+    return res.status(500).send(error?.message || 'Erro no proxy');
+  }
+});
+
+// 4. Endpoint for Sofia - Virtual Assistant
 app.post('/api/assistant', async (req, res) => {
   try {
     const { message, history } = req.body;
@@ -39,7 +158,7 @@ app.post('/api/assistant', async (req, res) => {
 
     const systemInstruction = `Você é Sofia, a assistente virtual e consultora imobiliária do corretor Sávio (@imoveiscomsavio).
 Seu tom é refinado, caloroso, extremamente profissional e acolhedor.
-O portal é especializado em residências e coberturas de alto padrão em regiões como Alphaville, Jardins, Itaim Bibi, Vila Nova Conceição, Fazenda da Grama e Balneário Camboriú.
+O portal é especializado em residências e coberturas de alto padrão em regiões nobres e condomínios fechados.
 Suas funções:
 1. Ajudar os clientes a entender opções de imóveis, perfis de casas em condomínio, coberturas e lançamentos.
 2. Esclarecer dúvidas sobre simulação de financiamento bancário (amortização SAC vs PRICE), compra, venda ou locação de luxo.

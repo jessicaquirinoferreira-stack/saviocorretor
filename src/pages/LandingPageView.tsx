@@ -46,11 +46,11 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
 
   if (!landingPage) {
     return (
-      <div className="min-h-screen bg-[#080c14] text-slate-100 pt-32 px-4 text-center">
-        <h2 className="text-2xl font-cinzel font-bold text-amber-400 mb-4">Oferta não encontrada</h2>
+      <div className="min-h-screen bg-[#F8F9FA] text-[#1A2621] pt-32 px-4 text-center">
+        <h2 className="text-2xl font-editorial font-bold text-[#0B2B20] mb-4">Oferta não encontrada</h2>
         <button
           onClick={() => navigate('/')}
-          className="px-6 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs uppercase"
+          className="px-6 py-2.5 rounded-xl bg-[#0B2B20] text-[#C8A251] font-bold text-xs uppercase"
         >
           Voltar para a página inicial
         </button>
@@ -109,7 +109,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
         particleCount: 80,
         spread: 60,
         origin: { y: 0.6 },
-        colors: ['#f59e0b', '#d97706', '#10b981']
+        colors: ['#0B2B20', '#C8A251', '#25D366']
       });
 
       setLeadSuccess(true);
@@ -121,29 +121,29 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
   };
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100">
+    <div className="min-h-screen bg-[#F8F9FA] text-[#1A2621]">
       {/* 1. LANDING PAGE HERO */}
-      <section className="relative min-h-[85vh] flex items-center justify-center pt-24 pb-16 px-4">
+      <section className="relative min-h-[85vh] flex items-center justify-center pt-24 pb-16 px-4 bg-[#0B2B20]">
         <div className="absolute inset-0 z-0">
           <img
             src={landingPage.bannerImage || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1800&q=80'}
             alt={landingPage.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#080c14] via-[#080c14]/85 to-[#080c14]/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B2B20] via-[#0B2B20]/85 to-[#0B2B20]/60" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-wider backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#C8A251]/20 border border-[#C8A251]/40 text-[#C8A251] text-xs font-semibold uppercase tracking-wider backdrop-blur-md">
             <Sparkles className="w-4 h-4" />
             <span>Condição Exclusiva • Assessoria @imoveiscomsavio</span>
           </div>
 
-          <h1 className="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+          <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
             {landingPage.headline || landingPage.title}
           </h1>
 
-          <p className="font-serif-luxury text-base sm:text-xl text-slate-200 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-editorial text-base sm:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed italic">
             {landingPage.subheadline}
           </p>
 
@@ -151,7 +151,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
             <a
               href="#formulario"
-              className="px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-sm shadow-xl shadow-amber-500/20 transition-all hover:scale-105"
+              className="px-6 py-3.5 rounded-full bg-[#C8A251] hover:bg-[#D4AF37] text-[#0B2B20] font-bold text-sm shadow-xl transition-all hover:scale-105"
             >
               Garantir Condição Exclusiva
             </a>
@@ -161,15 +161,15 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackEvent('whatsapp_click', { targetId: landingPage.id, targetTitle: landingPage.title })}
-              className="flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600/30 border border-emerald-500/50 hover:bg-emerald-600/40 text-emerald-300 font-semibold text-sm transition-all"
+              className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20BA5A] text-white font-semibold text-sm transition-all shadow-md"
             >
-              <MessageCircle className="w-4 h-4 fill-emerald-300" />
+              <MessageCircle className="w-4 h-4 fill-white" />
               <span>Falar no WhatsApp</span>
             </a>
 
             <button
               onClick={handleCopyLink}
-              className="flex items-center gap-1.5 px-4 py-3 rounded-full bg-slate-900/80 border border-slate-700 text-slate-300 hover:text-white text-xs font-medium"
+              className="flex items-center gap-1.5 px-4 py-3.5 rounded-full bg-[#071C15]/80 border border-[#153D2F] text-gray-300 hover:text-white text-xs font-medium"
             >
               {copiedLink ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               <span>{copiedLink ? 'Link copiado!' : 'Copiar link da oferta'}</span>
@@ -182,29 +182,29 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
       <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div>
-            <span className="text-xs uppercase tracking-widest text-amber-400 font-bold block mb-2">
+            <span className="text-xs uppercase tracking-widest text-[#0B2B20] font-bold block mb-2">
               Diferenciais da Oportunidade
             </span>
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-slate-100 mb-6">
+            <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-[#0B2B20] mb-6">
               Por que esta propriedade é ímpar no mercado:
             </h2>
 
             <div className="space-y-4">
               {landingPage.highlights.map((h, i) => (
-                <div key={i} className="flex items-start gap-3 p-3.5 rounded-xl bg-[#0d121f] border border-slate-800">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-200">{h}</span>
+                <div key={i} className="flex items-start gap-3 p-4 rounded-xl bg-white border border-gray-200/90 shadow-sm">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <span className="text-sm text-gray-700">{h}</span>
                 </div>
               ))}
             </div>
 
             {linkedProperty && (
-              <div className="mt-6 p-4 rounded-xl bg-slate-900 border border-amber-500/30 text-xs space-y-2">
-                <div className="text-amber-400 font-bold uppercase tracking-wider">Ficha Rápida do Imóvel:</div>
-                <div className="text-slate-300">
+              <div className="mt-6 p-4 rounded-xl bg-white border border-[#C8A251]/40 text-xs space-y-2 shadow-sm">
+                <div className="text-[#0B2B20] font-bold uppercase tracking-wider">Ficha Rápida do Imóvel:</div>
+                <div className="text-gray-700">
                   {linkedProperty.area} m² • {linkedProperty.bedrooms} Quartos ({linkedProperty.suites} Suítes) • {linkedProperty.parkingSpots} Vagas
                 </div>
-                <div className="text-slate-400">
+                <div className="text-gray-500">
                   Localização: {linkedProperty.neighborhood}, {linkedProperty.city}
                 </div>
               </div>
@@ -212,18 +212,18 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
           </div>
 
           {/* Form Box */}
-          <div id="formulario" className="bg-[#0d121f] rounded-2xl border border-amber-500/40 p-6 sm:p-8 shadow-2xl">
-            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-slate-100 mb-2">
+          <div id="formulario" className="bg-white rounded-2xl border-2 border-[#C8A251]/40 p-6 sm:p-8 shadow-xl">
+            <h3 className="font-editorial text-xl sm:text-2xl font-bold text-[#0B2B20] mb-2">
               Solicitar Condições Exclusivas
             </h3>
-            <p className="text-xs text-slate-400 mb-6">
+            <p className="text-xs text-gray-600 mb-6">
               Apenas os cadastros registrados nesta página terão acesso às condições especiais de negociação e atendimento com Sávio.
             </p>
 
             {!leadSuccess ? (
               <form onSubmit={handleLeadSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-1">
+                  <label className="block text-xs uppercase tracking-wider text-gray-700 font-semibold mb-1">
                     Seu Nome *
                   </label>
                   <input
@@ -232,12 +232,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
                     placeholder="Nome completo"
                     value={leadName}
                     onChange={(e) => setLeadName(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 outline-none focus:border-amber-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-sm text-[#1A2621] outline-none focus:border-[#0B2B20]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-1">
+                  <label className="block text-xs uppercase tracking-wider text-gray-700 font-semibold mb-1">
                     WhatsApp (com DDD) *
                   </label>
                   <input
@@ -246,12 +246,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
                     placeholder="(00) 00000-0000"
                     value={leadPhone}
                     onChange={(e) => setLeadPhone(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 outline-none focus:border-amber-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-sm text-[#1A2621] outline-none focus:border-[#0B2B20]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-1">
+                  <label className="block text-xs uppercase tracking-wider text-gray-700 font-semibold mb-1">
                     E-mail
                   </label>
                   <input
@@ -259,14 +259,14 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
                     placeholder="seuemail@exemplo.com"
                     value={leadEmail}
                     onChange={(e) => setLeadEmail(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 outline-none focus:border-amber-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-sm text-[#1A2621] outline-none focus:border-[#0B2B20]"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={leadSubmitting}
-                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-3.5 rounded-xl text-sm transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 bg-[#0B2B20] hover:bg-[#133F30] text-[#C8A251] font-bold py-3.5 rounded-xl text-sm transition-all shadow-md disabled:opacity-50"
                 >
                   <Send className="w-4 h-4" />
                   <span>{leadSubmitting ? 'Registrando...' : 'Quero Receber as Condições'}</span>
@@ -274,18 +274,18 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
               </form>
             ) : (
               <div className="py-6 text-center space-y-4">
-                <CheckCircle2 className="w-14 h-14 text-emerald-400 mx-auto" />
-                <h4 className="font-cinzel text-xl font-bold text-slate-100">
+                <CheckCircle2 className="w-14 h-14 text-emerald-600 mx-auto" />
+                <h4 className="font-editorial text-xl font-bold text-[#0B2B20]">
                   Cadastro Confirmado!
                 </h4>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-gray-600">
                   O corretor Sávio entrará em contato via WhatsApp para apresentar o material exclusivo.
                 </p>
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase"
+                  className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold text-xs uppercase shadow-md"
                 >
                   <MessageCircle className="w-4 h-4 fill-white" />
                   <span>Falar Agora com Sávio no WhatsApp</span>
@@ -298,14 +298,14 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({ slug, navigate
 
       {/* 3. GALLERY IF PRESENT */}
       {landingPage.gallery && landingPage.gallery.length > 0 && (
-        <section className="py-12 bg-slate-950/60 border-t border-slate-800">
+        <section className="py-12 bg-gray-50 border-t border-gray-200">
           <div className="max-w-6xl mx-auto px-4">
-            <h3 className="font-cinzel text-xl font-bold text-center text-slate-100 mb-8">
+            <h3 className="font-editorial text-2xl font-bold text-center text-[#0B2B20] mb-8">
               Perspectivas & Imagens da Propriedade
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {landingPage.gallery.map((img, i) => (
-                <div key={i} className="h-64 rounded-xl overflow-hidden border border-slate-800">
+                <div key={i} className="h-64 rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
                   <img src={img} alt="Foto da landing page" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                 </div>
               ))}

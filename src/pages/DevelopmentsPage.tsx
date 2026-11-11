@@ -15,6 +15,8 @@ export const DevelopmentsPage: React.FC<DevelopmentsPageProps> = ({ navigate, on
 
   const cleanWhatsapp = (settings.whatsapp || '').replace(/\D/g, '');
 
+  const [activeImgIndex, setActiveImgIndex] = useState<Record<string, number>>({});
+
   const filteredDevelopments = developments.filter((dev) => {
     if (!dev.published) return false;
     if (selectedStatus !== 'todos' && dev.status !== selectedStatus) return false;
@@ -22,23 +24,24 @@ export const DevelopmentsPage: React.FC<DevelopmentsPageProps> = ({ navigate, on
   });
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 pt-28 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-10 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-3">
+    <div className="min-h-screen bg-[#F8F9FA] text-[#1A2621]">
+      {/* Header Banner in Noble Green #0B2B20 */}
+      <section className="bg-[#0B2B20] text-white pt-32 pb-16 px-4 sm:px-6 lg:px-8 border-b border-[#153D2F] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#C8A251_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto relative z-10 text-center max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C8A251]/15 border border-[#C8A251]/30 text-[#C8A251] text-xs font-semibold uppercase tracking-wider mb-3">
             <Building2 className="w-4 h-4" />
-            <span>Lançamentos & Plantas</span>
+            <span>Lançamentos & Plantas Selecionadas</span>
           </div>
-          <h1 className="font-cinzel text-3xl sm:text-5xl font-bold text-slate-100 mb-4">
+          <h1 className="font-editorial text-3xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
             Empreendimentos de Alto Padrão
           </h1>
-          <p className="text-sm sm:text-base text-slate-400 leading-relaxed font-serif-luxury">
-            Projetos arquitetônicos icônicos desenvolvidos pelas incorporadoras mais prestigiadas do Brasil, com assessoria exclusiva de Sávio.
+          <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
+            Projetos arquitetônicos e condomínios fechados desenvolvidos pelas incorporadoras mais prestigiadas, com assessoria exclusiva de Sávio.
           </p>
 
           {/* Status Tabs */}
-          <div className="flex items-center justify-center gap-2 mt-8">
+          <div className="flex items-center justify-center gap-2 mt-8 flex-wrap">
             {[
               { id: 'todos', label: 'Todos os Projetos' },
               { id: 'lancamento', label: 'Lançamentos' },
@@ -50,8 +53,8 @@ export const DevelopmentsPage: React.FC<DevelopmentsPageProps> = ({ navigate, on
                 onClick={() => setSelectedStatus(tab.id)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
                   selectedStatus === tab.id
-                    ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
-                    : 'bg-slate-900 text-slate-400 hover:text-white'
+                    ? 'bg-[#C8A251] text-[#0B2B20] shadow-md font-bold'
+                    : 'bg-[#153D2F] text-gray-300 hover:text-white hover:bg-[#1A4535]'
                 }`}
               >
                 {tab.label}
@@ -59,10 +62,15 @@ export const DevelopmentsPage: React.FC<DevelopmentsPageProps> = ({ navigate, on
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Developments List */}
+      {/* Developments List */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-12">
           {filteredDevelopments.map((dev) => {
+            const currentImgIdx = activeImgIndex[dev.id] || 0;
+            const currentImg = dev.images?.[currentImgIdx] || dev.images?.[0] || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80';
+
             const devWhatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${encodeURIComponent(
               `Olá Sávio! Gostaria de receber a apresentação completa e tabela do empreendimento "${dev.name}".`
             )}`;
@@ -70,48 +78,75 @@ export const DevelopmentsPage: React.FC<DevelopmentsPageProps> = ({ navigate, on
             return (
               <div
                 key={dev.id}
-                className="bg-[#0d121f] rounded-2xl border border-slate-800 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-2xl hover:border-amber-500/30 transition-all"
+                className="bg-white rounded-2xl border border-gray-200/90 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-sm hover:shadow-xl transition-all"
               >
-                {/* Image */}
-                <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full">
-                  <img
-                    src={dev.images[0] || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80'}
-                    alt={dev.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d121f] via-transparent to-transparent lg:hidden" />
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500 text-slate-950">
-                    {dev.status === 'lancamento' ? 'Lançamento Exclusivo' : dev.status === 'em_obras' ? 'Em Obras' : 'Pronto'}
-                  </span>
+                {/* Image & Multi-photo Gallery */}
+                <div className="lg:col-span-5 flex flex-col justify-between bg-gray-900">
+                  <div className="relative min-h-[300px] lg:h-[380px] overflow-hidden">
+                    <img
+                      src={currentImg}
+                      alt={dev.name}
+                      className="w-full h-full object-cover transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#0B2B20] text-[#C8A251] shadow border border-[#C8A251]/30">
+                      {dev.status === 'lancamento' ? 'Lançamento Exclusivo' : dev.status === 'em_obras' ? 'Em Obras' : 'Pronto'}
+                    </span>
+                    {dev.images && dev.images.length > 1 && (
+                      <span className="absolute bottom-4 right-4 px-2.5 py-1 rounded-lg bg-black/75 backdrop-blur-md text-[11px] text-[#C8A251] font-medium border border-white/10">
+                        Foto {currentImgIdx + 1} de {dev.images.length}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Multi-Photo Thumbnail Bar */}
+                  {dev.images && dev.images.length > 1 && (
+                    <div className="p-3 bg-gray-900 border-t border-gray-800 flex items-center gap-2 overflow-x-auto">
+                      {dev.images.map((img, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setActiveImgIndex((prev) => ({ ...prev, [dev.id]: idx }))}
+                          className={`relative rounded-lg overflow-hidden w-16 h-12 shrink-0 border transition-all ${
+                            currentImgIdx === idx
+                              ? 'border-[#C8A251] scale-105 shadow'
+                              : 'border-transparent opacity-60 hover:opacity-100'
+                          }`}
+                        >
+                          <img src={img} alt={`Miniatura ${idx + 1}`} className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Content */}
                 <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between space-y-6">
                   <div>
-                    <div className="flex items-center gap-2 text-xs text-amber-400 uppercase tracking-widest font-semibold mb-2">
-                      <MapPin className="w-4 h-4" />
+                    <div className="flex items-center gap-2 text-xs text-[#0B2B20] uppercase tracking-widest font-semibold mb-2">
+                      <MapPin className="w-4 h-4 text-[#C8A251]" />
                       <span>{dev.neighborhood}, {dev.city} — Incorporação: {dev.developer}</span>
                     </div>
 
-                    <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-slate-100 mb-3">
+                    <h2 className="font-editorial text-2xl sm:text-3xl font-bold text-[#0B2B20] mb-3">
                       {dev.name}
                     </h2>
 
-                    <p className="text-sm text-slate-300 leading-relaxed mb-4">
+                    <p className="text-sm text-gray-600 leading-relaxed mb-4">
                       {dev.description}
                     </p>
 
-                    <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 font-medium space-y-1 mb-4">
-                      <div className="text-amber-400 font-bold uppercase tracking-wider text-[11px]">Tipologias Disponíveis:</div>
+                    <div className="p-4 rounded-xl bg-[#F8F9FA] border border-gray-200 text-xs text-gray-700 font-medium space-y-1 mb-4">
+                      <div className="text-[#0B2B20] font-bold uppercase tracking-wider text-[11px]">Tipologias Disponíveis:</div>
                       <div>{dev.typologies}</div>
                     </div>
 
                     {/* Features */}
                     {dev.features && dev.features.length > 0 && (
-                      <div className="grid grid-cols-2 gap-2 text-xs text-slate-400 mb-4">
+                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-600 mb-4">
                         {dev.features.map((feat, i) => (
                           <div key={i} className="flex items-center gap-1.5">
-                            <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                            <Sparkles className="w-3.5 h-3.5 text-[#C8A251] shrink-0" />
                             <span className="truncate">{feat}</span>
                           </div>
                         ))}
@@ -119,10 +154,10 @@ export const DevelopmentsPage: React.FC<DevelopmentsPageProps> = ({ navigate, on
                     )}
                   </div>
 
-                  <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="pt-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div>
-                      <span className="text-[11px] uppercase tracking-wider text-slate-500 block">Valores a partir de</span>
-                      <span className="font-cinzel text-xl sm:text-2xl font-bold text-amber-400">
+                      <span className="text-[11px] uppercase tracking-wider text-gray-500 block">Valores a partir de</span>
+                      <span className="font-editorial text-xl sm:text-2xl font-bold text-[#0B2B20]">
                         {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(dev.minPrice)}
                       </span>
                     </div>
@@ -132,15 +167,15 @@ export const DevelopmentsPage: React.FC<DevelopmentsPageProps> = ({ navigate, on
                         href={devWhatsappUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-600/30 text-xs font-bold transition-all"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#20BA5A] text-white text-xs font-bold transition-all shadow-sm"
                       >
-                        <MessageCircle className="w-4 h-4" />
+                        <MessageCircle className="w-4 h-4 fill-white" />
                         <span>Tabela no WhatsApp</span>
                       </a>
 
                       <button
                         onClick={() => onOpenLeadModal(undefined, 'visita')}
-                        className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-md shadow-amber-500/20 transition-all"
+                        className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-[#0B2B20] hover:bg-[#133F30] text-[#C8A251] font-bold text-xs uppercase tracking-wider shadow-sm transition-all"
                       >
                         Agendar Apresentação
                       </button>

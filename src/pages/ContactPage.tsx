@@ -39,7 +39,8 @@ export const ContactPage: React.FC = () => {
       confetti({
         particleCount: 70,
         spread: 60,
-        origin: { y: 0.6 }
+        origin: { y: 0.6 },
+        colors: ['#0B2B20', '#C8A251', '#25D366']
       });
 
       setIsSuccess(true);
@@ -51,84 +52,88 @@ export const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 pt-28 pb-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-amber-400 text-xs uppercase tracking-widest font-semibold block mb-2">
+    <div className="min-h-screen bg-[#F8F9FA] text-[#1A2621]">
+      {/* Header Banner in Noble Green #0B2B20 */}
+      <section className="bg-[#0B2B20] text-white pt-32 pb-16 px-4 sm:px-6 lg:px-8 border-b border-[#153D2F] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#C8A251_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+        <div className="max-w-3xl mx-auto relative z-10 text-center">
+          <span className="text-[#C8A251] text-xs uppercase tracking-widest font-semibold block mb-2">
             Canais Oficiais de Atendimento
           </span>
-          <h1 className="font-cinzel text-3xl sm:text-5xl font-bold text-slate-100 mb-4">
+          <h1 className="font-editorial text-3xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
             Entre em Contato
           </h1>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
             Estamos prontos para atender você com exclusividade, discrição e agilidade.
           </p>
         </div>
+      </section>
 
+      {/* Main Form and Info */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Info cards (Left) */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="p-6 rounded-2xl bg-[#0d121f] border border-slate-800 space-y-4">
-              <h3 className="font-cinzel text-lg font-bold text-slate-100">
+            <div className="p-6 sm:p-8 rounded-2xl bg-white border border-gray-200/90 space-y-4 shadow-sm">
+              <h3 className="font-editorial text-xl font-bold text-[#0B2B20]">
                 Atendimento Direto
               </h3>
 
-              <div className="space-y-4 text-sm text-slate-300">
+              <div className="space-y-4 text-sm text-gray-700">
                 <a
                   href={directWhatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all font-semibold"
+                  className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 transition-all font-semibold shadow-sm"
                 >
-                  <MessageCircle className="w-5 h-5 fill-emerald-400 shrink-0" />
+                  <MessageCircle className="w-5 h-5 fill-emerald-600 text-emerald-600 shrink-0" />
                   <div>
-                    <div className="text-[11px] text-slate-400 uppercase tracking-wider">WhatsApp Prioritário</div>
-                    <div>{settings.whatsapp || '(Defina no Painel)'}</div>
+                    <div className="text-[11px] text-emerald-700 uppercase tracking-wider font-bold">WhatsApp Prioritário</div>
+                    <div className="text-sm">{settings.whatsapp || '(Defina no Painel)'}</div>
                   </div>
                 </a>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <Phone className="w-5 h-5 text-amber-400 shrink-0" />
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#F8F9FA] border border-gray-200">
+                  <Phone className="w-5 h-5 text-[#C8A251] shrink-0" />
                   <div>
-                    <div className="text-[11px] text-slate-500 uppercase tracking-wider">Telefone Comercial</div>
-                    <div>{settings.phone || '(Configure no Painel Admin)'}</div>
+                    <div className="text-[11px] text-gray-500 uppercase tracking-wider">Telefone Comercial</div>
+                    <div className="font-medium text-[#1A2621]">{settings.phone || '(Configure no Painel Admin)'}</div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <Mail className="w-5 h-5 text-amber-400 shrink-0" />
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#F8F9FA] border border-gray-200">
+                  <Mail className="w-5 h-5 text-[#C8A251] shrink-0" />
                   <div>
-                    <div className="text-[11px] text-slate-500 uppercase tracking-wider">E-mail Comercial</div>
-                    <div className="truncate">{settings.email || 'contato@imoveiscomsavio.com.br'}</div>
+                    <div className="text-[11px] text-gray-500 uppercase tracking-wider">E-mail Comercial</div>
+                    <div className="truncate font-medium text-[#1A2621]">{settings.email || 'contato@imoveiscomsavio.com.br'}</div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <MapPin className="w-5 h-5 text-amber-400 shrink-0" />
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#F8F9FA] border border-gray-200">
+                  <MapPin className="w-5 h-5 text-[#C8A251] shrink-0" />
                   <div>
-                    <div className="text-[11px] text-slate-500 uppercase tracking-wider">Endereço / Região</div>
-                    <div className="text-xs">{settings.address || 'Atendimento com horário agendado'}</div>
+                    <div className="text-[11px] text-gray-500 uppercase tracking-wider">Endereço / Região</div>
+                    <div className="text-xs font-medium text-[#1A2621]">{settings.address || 'Atendimento com horário agendado'}</div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <Clock className="w-5 h-5 text-amber-400 shrink-0" />
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#F8F9FA] border border-gray-200">
+                  <Clock className="w-5 h-5 text-[#C8A251] shrink-0" />
                   <div>
-                    <div className="text-[11px] text-slate-500 uppercase tracking-wider">Horários</div>
-                    <div className="text-xs">Segunda a Sábado, das 08h às 20h (Plantão sob demanda)</div>
+                    <div className="text-[11px] text-gray-500 uppercase tracking-wider">Horários</div>
+                    <div className="text-xs font-medium text-[#1A2621]">Segunda a Sábado, das 08h às 20h (Plantão sob demanda)</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+            <div className="p-4 rounded-xl bg-white border border-gray-200 text-xs text-gray-600 flex items-center justify-between shadow-sm">
               <span>Siga o perfil oficial:</span>
               <a
                 href={settings.instagramUrl || 'https://www.instagram.com/imoveiscomsavio/'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-pink-400 font-semibold flex items-center gap-1 hover:underline"
+                className="text-pink-600 font-semibold flex items-center gap-1 hover:underline"
               >
                 <Instagram className="w-3.5 h-3.5" />
                 <span>@imoveiscomsavio</span>
@@ -137,18 +142,18 @@ export const ContactPage: React.FC = () => {
           </div>
 
           {/* Form (Right) */}
-          <div className="lg:col-span-7 bg-[#0d121f] rounded-2xl border border-slate-800 p-8 shadow-2xl">
-            <h3 className="font-cinzel text-xl font-bold text-slate-100 mb-2">
+          <div className="lg:col-span-7 bg-white rounded-2xl border border-gray-200/90 p-8 shadow-sm">
+            <h3 className="font-editorial text-2xl font-bold text-[#0B2B20] mb-2">
               Envie uma Mensagem
             </h3>
-            <p className="text-xs text-slate-400 mb-6">
+            <p className="text-xs text-gray-600 mb-6">
               Preencha os campos abaixo e entraremos em contato com a brevidade que seu tempo exige.
             </p>
 
             {!isSuccess ? (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-1">
+                  <label className="block text-xs uppercase tracking-wider text-gray-600 font-medium mb-1">
                     Nome Completo *
                   </label>
                   <input
@@ -157,13 +162,13 @@ export const ContactPage: React.FC = () => {
                     placeholder="Seu nome"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-sm text-slate-100 outline-none focus:border-amber-500 transition-colors"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-sm text-[#1A2621] outline-none focus:border-[#0B2B20] transition-colors"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-1">
+                    <label className="block text-xs uppercase tracking-wider text-gray-600 font-medium mb-1">
                       WhatsApp ou Celular *
                     </label>
                     <input
@@ -172,12 +177,12 @@ export const ContactPage: React.FC = () => {
                       placeholder="(00) 00000-0000"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-sm text-slate-100 outline-none focus:border-amber-500 transition-colors"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-sm text-[#1A2621] outline-none focus:border-[#0B2B20] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-1">
+                    <label className="block text-xs uppercase tracking-wider text-gray-600 font-medium mb-1">
                       E-mail (opcional)
                     </label>
                     <input
@@ -185,13 +190,13 @@ export const ContactPage: React.FC = () => {
                       placeholder="seuemail@exemplo.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-sm text-slate-100 outline-none focus:border-amber-500 transition-colors"
+                      className="w-full px-4 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-sm text-[#1A2621] outline-none focus:border-[#0B2B20] transition-colors"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-1">
+                  <label className="block text-xs uppercase tracking-wider text-gray-600 font-medium mb-1">
                     Como podemos lhe ajudar?
                   </label>
                   <textarea
@@ -199,14 +204,14 @@ export const ContactPage: React.FC = () => {
                     placeholder="Descreva seu interesse, região desejada ou perfil do imóvel..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-sm text-slate-100 outline-none focus:border-amber-500 transition-colors resize-none placeholder:text-slate-500"
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#F8F9FA] border border-gray-300 text-sm text-[#1A2621] outline-none focus:border-[#0B2B20] transition-colors resize-none placeholder:text-gray-400"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-3 rounded-xl text-sm transition-all shadow-lg shadow-amber-500/20 disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 bg-[#0B2B20] hover:bg-[#133F30] text-[#C8A251] font-bold py-3 rounded-xl text-sm transition-all shadow-sm disabled:opacity-50"
                 >
                   <Send className="w-4 h-4" />
                   <span>{isSubmitting ? 'Enviando dados...' : 'Enviar Mensagem'}</span>
@@ -214,16 +219,16 @@ export const ContactPage: React.FC = () => {
               </form>
             ) : (
               <div className="py-8 text-center space-y-4">
-                <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto" />
-                <h4 className="font-cinzel text-2xl font-bold text-slate-100">
+                <CheckCircle2 className="w-16 h-16 text-emerald-600 mx-auto" />
+                <h4 className="font-editorial text-2xl font-bold text-[#0B2B20]">
                   Mensagem Enviada!
                 </h4>
-                <p className="text-sm text-slate-300 max-w-md mx-auto">
+                <p className="text-sm text-gray-600 max-w-md mx-auto">
                   Agradecemos seu contato. O corretor Sávio responderá em breve através do WhatsApp fornecido.
                 </p>
                 <button
                   onClick={() => setIsSuccess(false)}
-                  className="px-6 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-semibold text-slate-300"
+                  className="px-6 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700"
                 >
                   Enviar Outra Mensagem
                 </button>

@@ -43,7 +43,7 @@ export const FloatingSocialButtons: React.FC<FloatingSocialButtonsProps> = ({
     >
       {/* 1. Official Instagram Floating Button */}
       <div className="flex items-center group">
-        <div className="hidden sm:block mr-3 px-3 py-1.5 rounded-full bg-slate-900/95 text-slate-100 border border-pink-500/30 text-xs font-semibold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+        <div className="hidden sm:block mr-3 px-3 py-1.5 rounded-full bg-[#0B2B20] text-[#C8A251] border border-[#C8A251]/40 text-xs font-semibold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
           Instagram @imoveiscomsavio
         </div>
         <a
@@ -66,9 +66,9 @@ export const FloatingSocialButtons: React.FC<FloatingSocialButtonsProps> = ({
         </a>
       </div>
 
-      {/* 2. Official WhatsApp Floating Button */}
+      {/* 2. Official WhatsApp Floating Button (TFT Style) */}
       <div className="flex items-center group">
-        <div className="hidden sm:block mr-3 px-3 py-1.5 rounded-full bg-slate-900/95 text-slate-100 border border-emerald-500/30 text-xs font-semibold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+        <div className="hidden sm:block mr-3 px-3 py-1.5 rounded-full bg-white text-[#0B2B20] border border-gray-200 text-xs font-semibold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
           WhatsApp Oficial de Sávio
         </div>
         <a
@@ -76,13 +76,13 @@ export const FloatingSocialButtons: React.FC<FloatingSocialButtonsProps> = ({
           target="_blank"
           rel="noopener noreferrer"
           onClick={handleWhatsappClick}
-          className="relative flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white shadow-2xl shadow-emerald-500/30 hover:scale-110 active:scale-95 transition-all duration-300 focus:outline-none"
+          className="relative flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white shadow-2xl shadow-emerald-500/30 hover:scale-110 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#25D366]/30"
           aria-label="Atendimento via WhatsApp"
           title="Falar com Sávio no WhatsApp"
         >
           {/* Subtle pulse badge */}
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-400 rounded-full animate-ping" />
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-400 rounded-full border-2 border-slate-900" />
+          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#C8A251] rounded-full animate-ping" />
+          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#C8A251] rounded-full border-2 border-[#0B2B20]" />
 
           {/* Official WhatsApp Glyph */}
           <svg
